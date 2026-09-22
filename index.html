@@ -276,52 +276,15 @@
       </div>
     </section>
 
-    <!-- Fourth Section: Projects -->
+    <!-- Fourth Section: Dynamic Projects -->
     <section id="projects" class="section scrollspy">
       <h3 class="page-title white-text blue">Projects</h3>
       <div class="container">
-        <div class="row">
-
-          <div class="col s12 m6 l4">
-            <div class="card medium">
-              <div class="card-content">
-                <span class="card-title activator blue-text hoverline">Space Shooter Game<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  A space shooter game programmed with Verilog.
-                </p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li><b>Tools:</b> Verilog</li>
-                  <li>Used keyboard input and screen output devices.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col s12 m6 l4">
-            <div class="card medium">
-              <div class="card-content">
-                <span class="card-title activator blue-text hoverline">Othello Game<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  Othello board game implemented in C.
-                </p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li><b>Tools:</b> C, DE1-SoC Board</li>
-                  <li>Utilized DE1-SoC board input and screen output devices.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
+        <div class="row" id="projects-container">
+          <!-- Dynamically inserted project cards will appear here -->
+        </div>
+        <div class="center-align" style="margin-top: 20px;">
+          <button id="load-more-btn" class="btn waves-effect waves-light blue">Load More</button>
         </div>
       </div>
     </section>
@@ -450,14 +413,83 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
   <script>
     // Materialize - Initializers
-    $(document).ready(function () {
-      $(".scrollspy").scrollSpy()
+    $(document).ready(function () {$(".scrollspy").scrollSpy()
       $(".button-collapse").sideNav({
         menuWidth: 190,
         edge: "left",
         closeOnClick: true
       })
-    })
+    });
+
+    // Activity 5: Dynamic Projects Loading Logic
+    const projects = [
+      {
+        title: "Space Shooter Game",
+        description: "A space shooter game programmed with Verilog.",
+        tools: "Verilog",
+        details: "Used keyboard input and screen output devices."
+      },
+      {
+        title: "Othello Game",
+        description: "Othello board game implemented in C.",
+        tools: "C, DE1-SoC Board",
+        details: "Utilized DE1-SoC board input and screen output devices."
+      },
+      {
+        title: "Digital Filter Design",
+        description: "Designed and simulated an active low-pass filter.",
+        tools: "LTspice, MATLAB",
+        details: "Analyzed frequency response and stability margins."
+      },
+      {
+        title: "Smart Home Automation System",
+        description: "Microcontroller-based environmental monitoring prototype.",
+        tools: "C++, Arduino, Sensors",
+        details: "Implemented real-time data logging and remote control capabilities."
+      }
+    ];
+
+    let displayedCount = 2;
+    const container = document.getElementById('projects-container');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+
+    function renderProjects(count) {
+      container.innerHTML = '';
+      for (let i = 0; i < count && i < projects.length; i++) {
+        const p = projects[i];
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col s12 m6 l4';
+        colDiv.innerHTML = `
+          <div class="card medium">
+            <div class="card-content">
+              <span class="card-title activator blue-text hoverline">${p.title}<i class="mdi-navigation-more-vert right"></i></span>
+              <p>${p.description}</p>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text"><small>Accomplishments</small><i class="mdi-navigation-close right"></i></span>
+              <ul>
+                <li><b>Tools:</b> ${p.tools}</li>
+                <li>${p.details}</li>
+              </ul>
+            </div>
+          </div>
+        `;
+        container.appendChild(colDiv);
+      }
+
+      if (displayedCount >= projects.length) {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
+
+    // Initial render showing 2 projects
+    renderProjects(displayedCount);
+
+    // Load more click handler
+    loadMoreBtn.addEventListener('click', function() {
+      displayedCount += 2;
+      renderProjects(displayedCount);
+    });
   </script>
 </body>
 
