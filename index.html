@@ -152,6 +152,7 @@
             <div class='buttons'>
               <a href="#about" class="readme">Read More</a>
               <a href="#contact" class="contactme">Contact Me</a>
+              <button id="confetti-btn" class="btn waves-effect waves-light blue" style="margin-left: 10px; text-transform: none; border-radius: 4px;">Celebrate!</button>
             </div>
           </div>
         </div>
@@ -397,6 +398,8 @@
 
   <!-- typed.js -->
   <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <!-- canvas-confetti library for Activity 6 -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script type="text/javascript">
     var typed = new Typed('.typing',{
       strings: ["Electrical Engineering Student", "Problem Solver", "Team Leader"],
@@ -489,6 +492,15 @@
     loadMoreBtn.addEventListener('click', function() {
       displayedCount += 2;
       renderProjects(displayedCount);
+    });
+
+    // Activity 6: Confetti Animation Trigger
+    document.getElementById('confetti-btn').addEventListener('click', function() {
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
     });
   </script>
 </body>
